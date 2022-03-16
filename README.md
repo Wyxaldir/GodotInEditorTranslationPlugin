@@ -16,13 +16,15 @@ If you need to edit the translation, simply change it in editor and hit the save
 
 You can also create new translations by writing in a new key and translation value and hitting the save icon. From here, you can select an existing file to append to it or save to a new file which will be properly configured based on which languages are loaded with the translation server.
 
-# Installation:
+# Installation
 Simply copy/paste the addons folder into your own addons folder in your project. 
 Once you have copied over the addon, enable it in projectSettings/plugins.
 
-# Configuration:
+# Configuration
 There are two settings that can be configured once the plugin is loaded: Translation Location and Valid Variable Names.
 
 Editing Translation Locations will set where the plugin will look for the translation files. Is "res://translations" by default.
-Editing Valid Variable Names will set which string edits will have the translation display. Is text by default.
+
+Editing Valid Variable Names will set which string edits will have the translation display. Is "text" by default.
+For example, you can add "DisplayValue" to the array and whenever you have an exported variable called DisplayValue it will make use of the translation ui.
 
