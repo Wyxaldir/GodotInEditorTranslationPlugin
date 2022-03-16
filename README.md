@@ -24,5 +24,7 @@ Once you have copied over the addon, enable it in projectSettings/plugins.
 There are two settings that can be configured once the plugin is loaded: Translation Location and Valid Variable Names.
 
 Editing Translation Locations will set where the plugin will look for the translation files. Is "res://translations" by default.
-Editing Valid Variable Names will set which string edits will have the translation display. Is text by default.
+
+Editing Valid Variable Names will set which string edits will have the translation display. Is "text" by default.
+For example, you can add "DisplayValue" to the array and whenever you have an exported variable called DisplayValue it will make use of the translation ui.
 
