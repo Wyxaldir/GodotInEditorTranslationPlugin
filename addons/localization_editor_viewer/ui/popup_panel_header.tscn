@@ -1,0 +1,18 @@
+[gd_scene format=2]
+
+[node name="Header" type="HBoxContainer"]
+visible = false
+margin_top = 24.0
+margin_right = 75.0
+margin_bottom = 24.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Indenter" type="Control" parent="."]
+margin_right = 4.0
+rect_min_size = Vector2( 4, 0 )
+
+[node name="ButtonParent" type="VBoxContainer" parent="."]
+margin_left = 8.0
+margin_right = 8.0

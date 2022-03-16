@@ -1,0 +1,135 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://addons/localization_editor_viewer/ui/localization_editor_viewer.gd" type="Script" id=2]
+[ext_resource path="res://addons/localization_editor_viewer/ui/folder.svg" type="Texture" id=3]
+[ext_resource path="res://addons/localization_editor_viewer/ui/selection_popup.tscn" type="PackedScene" id=5]
+[ext_resource path="res://addons/localization_editor_viewer/ui/save.svg" type="Texture" id=6]
+
+[sub_resource type="StyleBoxFlat" id=7]
+
+[sub_resource type="StyleBoxFlat" id=8]
+
+[sub_resource type="StyleBoxFlat" id=9]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[sub_resource type="StyleBoxFlat" id=10]
+
+[sub_resource type="StyleBoxFlat" id=11]
+
+[sub_resource type="StyleBoxFlat" id=2]
+content_margin_left = 4.0
+content_margin_right = 4.0
+content_margin_top = 4.0
+bg_color = Color( 0.458824, 0.431373, 0.615686, 0.160784 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0, 0.0745098, 0.184314, 1 )
+
+[sub_resource type="StyleBoxFlat" id=12]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[sub_resource type="StyleBoxFlat" id=13]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[node name="LocalizationEditorViewer" type="VBoxContainer"]
+margin_right = 269.0
+margin_bottom = 46.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="KeyInput" type="HBoxContainer" parent="."]
+margin_right = 269.0
+margin_bottom = 24.0
+
+[node name="TitleLabel" type="Label" parent="KeyInput"]
+margin_top = 5.0
+margin_right = 27.0
+margin_bottom = 19.0
+text = "Key:"
+
+[node name="KeyInput" type="LineEdit" parent="KeyInput"]
+margin_left = 31.0
+margin_right = 229.0
+margin_bottom = 24.0
+hint_tooltip = "The input field for the translation key. 
+If a valid key in inputted, the translated text will be shown below. 
+You can browse available keys with the folder button to the right."
+size_flags_horizontal = 3
+
+[node name="PickerButton" type="Button" parent="KeyInput"]
+margin_left = 233.0
+margin_right = 249.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 16, 16 )
+hint_tooltip = "Browse valid keys and see their translated values."
+custom_styles/hover = SubResource( 7 )
+custom_styles/pressed = SubResource( 8 )
+custom_styles/focus = SubResource( 9 )
+custom_styles/disabled = SubResource( 10 )
+custom_styles/normal = SubResource( 11 )
+icon = ExtResource( 3 )
+flat = true
+
+[node name="SaveButton" type="Button" parent="KeyInput"]
+margin_left = 253.0
+margin_right = 269.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 16, 16 )
+hint_tooltip = "Save any changes made to the contents of a key (edits made in the bottom input field). 
+Will replace existing text associated with a key or append if it is a new key. 
+You can create new files here too by selecting a file that does not exist."
+custom_styles/hover = SubResource( 7 )
+custom_styles/pressed = SubResource( 8 )
+custom_styles/focus = SubResource( 9 )
+custom_styles/disabled = SubResource( 10 )
+custom_styles/normal = SubResource( 11 )
+disabled = true
+icon = ExtResource( 6 )
+flat = true
+
+[node name="TextContainer" type="PanelContainer" parent="."]
+margin_top = 28.0
+margin_right = 269.0
+margin_bottom = 133.0
+custom_styles/panel = SubResource( 2 )
+
+[node name="TranslatedText" type="TextEdit" parent="TextContainer"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 265.0
+margin_bottom = 104.0
+rect_min_size = Vector2( 0, 100 )
+hint_tooltip = "The translated version of the key input above. 
+Editing this does nothing unless you save it to a .csv using the save button in the top-right of the ui."
+custom_styles/focus = SubResource( 12 )
+custom_styles/normal = SubResource( 13 )
+text = "No translation available."
+highlight_all_occurrences = true
+virtual_keyboard_enabled = false
+wrap_enabled = true
+
+[node name="PopupContainer" type="Node" parent="."]
+
+[node name="PopupPanel" parent="PopupContainer" instance=ExtResource( 5 )]
+
+[node name="FileDialog" type="FileDialog" parent="PopupContainer"]
+margin_right = 315.0
+margin_bottom = 417.0
+window_title = "Save a Translation Text"
+filters = PoolStringArray( "*.csv" )
+current_dir = "res://translations"
+current_file = "text.csv"
+current_path = "res://translations/text.csv"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="text_changed" from="KeyInput/KeyInput" to="." method="_on_KeyInput_text_changed"]
+[connection signal="pressed" from="KeyInput/PickerButton" to="." method="_on_PickerButton_pressed"]
+[connection signal="pressed" from="KeyInput/SaveButton" to="." method="_on_SaveButton_pressed"]
+[connection signal="key_selected" from="PopupContainer/PopupPanel" to="." method="_on_PopupPanel_key_selected"]
+[connection signal="file_selected" from="PopupContainer/FileDialog" to="." method="_on_FileDialog_file_selected"]
