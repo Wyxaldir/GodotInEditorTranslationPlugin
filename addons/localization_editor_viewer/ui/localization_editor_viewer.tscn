@@ -164,11 +164,11 @@ __meta__ = {
 anchor_left = 0.5
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -149.0
-margin_top = 25.0
-margin_right = 151.0
-margin_bottom = -25.0
-rect_min_size = Vector2( 300, 0 )
+margin_left = -273.0
+margin_top = 33.0
+margin_right = 277.0
+margin_bottom = -50.0
+rect_min_size = Vector2( 550, 0 )
 custom_styles/panel = SubResource( 16 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -177,6 +177,10 @@ __meta__ = {
 [node name="VBoxContainer" type="VBoxContainer" parent="PopupContainer/TextEditPopup"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = 1.0
+margin_top = 1.0
+margin_right = -1.0
+margin_bottom = -1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 __meta__ = {
@@ -184,14 +188,14 @@ __meta__ = {
 }
 
 [node name="HeaderContainer" type="PanelContainer" parent="PopupContainer/TextEditPopup/VBoxContainer"]
-margin_right = 300.0
+margin_right = 548.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 0, 20 )
 custom_styles/panel = ExtResource( 9 )
 
 [node name="TitleLabel" type="Label" parent="PopupContainer/TextEditPopup/VBoxContainer/HeaderContainer"]
 margin_top = 4.0
-margin_right = 300.0
+margin_right = 548.0
 margin_bottom = 18.0
 size_flags_horizontal = 3
 text = "Edit Text:"
@@ -199,8 +203,8 @@ align = 1
 
 [node name="PopoutTextEdit" type="TextEdit" parent="PopupContainer/TextEditPopup/VBoxContainer"]
 margin_top = 24.0
-margin_right = 300.0
-margin_bottom = 524.0
+margin_right = 548.0
+margin_bottom = 489.0
 size_flags_vertical = 3
 custom_styles/focus = ExtResource( 8 )
 custom_styles/normal = ExtResource( 8 )
@@ -210,14 +214,14 @@ __meta__ = {
 }
 
 [node name="HeaderContainer2" type="PanelContainer" parent="PopupContainer/TextEditPopup/VBoxContainer"]
-margin_top = 528.0
-margin_right = 300.0
-margin_bottom = 550.0
+margin_top = 493.0
+margin_right = 548.0
+margin_bottom = 515.0
 custom_styles/panel = ExtResource( 9 )
 
 [node name="OKButton" type="Button" parent="PopupContainer/TextEditPopup/VBoxContainer/HeaderContainer2"]
 margin_top = 2.0
-margin_right = 300.0
+margin_right = 548.0
 margin_bottom = 22.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -228,18 +232,25 @@ text = "OK"
 flat = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PopupContainer/TextEditPopup"]
+anchor_left = 1.0
 anchor_right = 1.0
-margin_bottom = 20.0
-size_flags_vertical = 2
+margin_left = -549.0
+margin_top = 1.0
+margin_right = -1.0
+margin_bottom = 516.0
+mouse_filter = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
 alignment = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="ClosePopupButton" type="Button" parent="PopupContainer/TextEditPopup/HBoxContainer"]
-margin_left = 281.0
-margin_right = 300.0
+margin_left = 529.0
+margin_right = 548.0
 margin_bottom = 20.0
+size_flags_horizontal = 0
 size_flags_vertical = 0
 custom_styles/focus = SubResource( 20 )
 text = "x"
