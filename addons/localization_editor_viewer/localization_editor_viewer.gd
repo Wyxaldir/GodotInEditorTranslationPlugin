@@ -11,7 +11,7 @@ func parse_property(object, type, path, hint, hint_text, usage) -> bool:
 	if not type == TYPE_STRING:
 		return false
 
-	for variable_name in ProjectSettings.get_setting("viun_plugins/translation_plugin/valid_variable_names"):
+	for variable_name in ProjectSettings.get_setting("translation_plugin/valid_variable_names"):
 		if variable_name.to_lower() == path.to_lower():
 			setup_ui(object, path)
 			return true

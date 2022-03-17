@@ -15,7 +15,7 @@ func _exit_tree() -> void:
 
 
 func init_project_settings():
-	var projectSettingsBasePath = "viun_plugins/translation_plugin/"
+	var projectSettingsBasePath = "translation_plugin/"
 	
 	if not ProjectSettings.has_setting(projectSettingsBasePath + "translations_location"):
 		ProjectSettings.set_setting(projectSettingsBasePath + "translations_location", "res://translations/")

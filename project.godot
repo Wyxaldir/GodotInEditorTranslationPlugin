@@ -55,7 +55,7 @@ locale_filter=[ 1, [  ] ]
 
 common/enable_pause_aware_picking=true
 
-[viun_plugins]
+[translation_plugin]
 
-translation_plugin/translations_location="res://translations/"
-translation_plugin/valid_variable_names=PoolStringArray( "text" )
+translations_location="res://translations/"
+valid_variable_names=PoolStringArray( "text" )

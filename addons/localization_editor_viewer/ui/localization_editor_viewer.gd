@@ -89,7 +89,7 @@ func translate_text(var text : String) -> String:
 
 func load_translated_strings(var base_folder : String = "") -> bool:
 	if base_folder == "":
-		base_folder = ProjectSettings.get_setting("viun_plugins/translation_plugin/translations_location")
+		base_folder = ProjectSettings.get_setting("translation_plugin/translations_location")
 	
 	var dir = Directory.new()
 	var err = dir.open(base_folder)

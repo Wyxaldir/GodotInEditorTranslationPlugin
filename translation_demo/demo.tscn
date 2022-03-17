@@ -66,7 +66,7 @@ size_flags_vertical = 3
 [node name="LivingRock" type="Button" parent="ContentContainer/MainContainer/HBoxContainer/ItemBrowser"]
 margin_right = 225.0
 margin_bottom = 20.0
-text = "KEY_LIVING_ROCK_NAME"
+text = "KEY_LIVING_ROCK"
 
 [node name="RustyKey" type="Button" parent="ContentContainer/MainContainer/HBoxContainer/ItemBrowser"]
 margin_top = 24.0
