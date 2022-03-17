@@ -6,17 +6,17 @@ var object_being_edited
 var variable_path
 
 
-func init():
+func init() -> void:
 	$KeyInput/KeyInput.text = object_being_edited.get(variable_path)
 	_on_KeyInput_text_changed($KeyInput/KeyInput.text)
 
 
-func set_title_label_text(new_text : String):
+func set_title_label_text(new_text : String) -> void:
 	$KeyInput/TitleLabel.text = new_text
 
 
 func _on_KeyInput_text_changed(new_text: String) -> void:
-	$TextContainer/TranslatedText.text = translate_text(new_text)
+	$TextContainer/HBoxContainer/TranslatedText.text = translate_text(new_text)
 	
 	if new_text.length() > 0 and new_text.begins_with(" "):
 		while new_text.begins_with(" "):
@@ -54,6 +54,16 @@ func _on_SaveButton_pressed() -> void:
 	
 	$PopupContainer/FileDialog.popup()
 	$PopupContainer/FileDialog.rect_position = get_global_mouse_position() - Vector2($PopupContainer/FileDialog.rect_size.x, 0)
+
+
+func _on_ShowTextPopoutButton_pressed() -> void:
+	$PopupContainer/TextEditPopup.popup()
+	$PopupContainer/TextEditPopup/VBoxContainer/PopoutTextEdit.grab_focus()
+	$PopupContainer/TextEditPopup/VBoxContainer/PopoutTextEdit.text = $TextContainer/HBoxContainer/TranslatedText.text
+
+
+func _on_PopoutTextEdit_text_changed() -> void:
+	$TextContainer/HBoxContainer/TranslatedText.text = $PopupContainer/TextEditPopup/VBoxContainer/PopoutTextEdit.text
 
 
 func _on_FileDialog_file_selected(path: String) -> void:
@@ -221,10 +231,6 @@ func get_line_length_to_delete(var line : String):
 		extra_chars_to_remove_length += 2 # For the two quotation marks
 	
 	return data[0].length() + data[1].length() + extra_chars_to_remove_length
-
-
-
-
 
 
 

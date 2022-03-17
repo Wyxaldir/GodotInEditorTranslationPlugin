@@ -16,7 +16,7 @@ config/icon="res://project_icon.png"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/localization_editor_viewer/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/editor_icon_previewer/plugin.cfg", "res://addons/localization_editor_viewer/plugin.cfg" )
 
 [global]
 
