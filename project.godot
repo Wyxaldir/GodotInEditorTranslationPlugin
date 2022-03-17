@@ -16,7 +16,7 @@ config/icon="res://project_icon.png"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/editor_icon_previewer/plugin.cfg", "res://addons/localization_editor_viewer/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/localization_editor_viewer/plugin.cfg" )
 
 [global]
 
@@ -48,16 +48,12 @@ texture={
 
 [locale]
 
-translations=PoolStringArray( "res://translations/text.en.translation", "res://translations/text.fr.translation", "res://translations/item_descriptions/item_descriptions.en.translation", "res://translations/item_descriptions/item_descriptions.fr.translation", "res://translations/demo.en.translation", "res://translations/demo.fr.translation" )
+translations=PoolStringArray( "res://translations/item_descriptions/item_descriptions.en.translation", "res://translations/item_descriptions/item_descriptions.fr.translation", "res://translations/demo.en.translation", "res://translations/demo.fr.translation" )
 locale_filter=[ 1, [  ] ]
 
 [physics]
 
 common/enable_pause_aware_picking=true
-
-[rendering]
-
-environment/default_environment="res://default_env.tres"
 
 [viun_plugins]
 
