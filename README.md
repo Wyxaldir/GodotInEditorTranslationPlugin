@@ -1,4 +1,4 @@
-# GodotInEditorTranslationPlugin
+# Godot In-Editor Translation Viewer/Editor
 A plugin for Godot that makes creating and maintaining translations much easier and intuitive in-editor. 
 
 The goal of this plugin is to make it easy to create new translations and add them to existing or new .csv files. 
