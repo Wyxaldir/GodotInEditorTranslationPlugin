@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/save.svg-2b761919db0d1d839a48bae4598d7383.stex"
+path="res://.import/expand_text.svg-2524433662d4ca483cac1379b4842b9a.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/localization_editor_viewer/ui/save.svg"
-dest_files=[ "res://.import/save.svg-2b761919db0d1d839a48bae4598d7383.stex" ]
+source_file="res://addons/localization_editor_viewer/ui/icons/expand_text.svg"
+dest_files=[ "res://.import/expand_text.svg-2524433662d4ca483cac1379b4842b9a.stex" ]
 
 [params]
 
@@ -28,7 +28,6 @@ process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
 process/invert_color=false
-process/normal_map_invert_y=false
 stream=false
 size_limit=0
 detect_3d=true

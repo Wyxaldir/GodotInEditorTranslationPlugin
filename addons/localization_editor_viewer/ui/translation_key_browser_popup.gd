@@ -86,7 +86,7 @@ func _get_locale_index(var csv_line : PoolStringArray) -> int:
 
 
 func _get_translation_files(var base_folder) -> Array:
-	var result = []
+	var result := []
 	
 	var dir = Directory.new()
 	var err = dir.open(base_folder)
