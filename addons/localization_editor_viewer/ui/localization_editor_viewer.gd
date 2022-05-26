@@ -33,7 +33,8 @@ func _on_PickerButton_pressed() -> void:
 	if translated_strings.size() == 0:
 		load_translated_strings()
 	
-	$PopupContainer/PopupPanel.show_translated_text(translated_strings)
+	
+	$PopupContainer/TranslationKeyBrowserPopup.show_keys()
 
 
 func _on_PopupPanel_key_selected(key) -> void:
@@ -233,5 +234,6 @@ func get_line_length_to_delete(var line : String):
 	return data[0].length() + data[1].length() + extra_chars_to_remove_length
 
 
-
-
+func _on_TranslationKeyBrowserPopup_key_selected(key) -> void:
+	$KeyInput/KeyInput.text = key
+	_on_KeyInput_text_changed(key)
