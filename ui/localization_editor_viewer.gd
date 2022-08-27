@@ -4,12 +4,12 @@ extends VBoxContainer
 var translated_strings : Dictionary
 var object_being_edited
 var variable_path
-
+var language = "en"
 
 func init() -> void:
 	$KeyInput/KeyInput.text = object_being_edited.get(variable_path)
 	_on_KeyInput_text_changed($KeyInput/KeyInput.text)
-	
+	_init_language_dropdown()
 
 
 func set_title_label_text(new_text : String) -> void:
@@ -242,3 +242,22 @@ func get_line_length_to_delete(var line : String):
 func _on_TranslationKeyBrowserPopup_key_selected(key) -> void:
 	$KeyInput/KeyInput.text = key
 	_on_KeyInput_text_changed(key)
+
+
+func _init_language_dropdown():
+	var locales = TranslationServer.get_loaded_locales()
+	var unique_locales = []
+	
+	for locale in locales:
+		if not unique_locales.has(locale):
+			unique_locales.append(locale)
+	
+	unique_locales.sort()
+	
+	$KeyInput/LanguageSelectButton.clear()
+	for locale in unique_locales:
+		$KeyInput/LanguageSelectButton.add_item(locale)
+
+
+func _on_LanguageSelectButton_item_selected(index: int) -> void:
+	language = $KeyInput/LanguageSelectButton.get_item_text(index)

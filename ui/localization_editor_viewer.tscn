@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://addons/localization_editor_viewer/ui/icons/expand_text.svg" type="Texture" id=1]
 [ext_resource path="res://addons/localization_editor_viewer/ui/localization_editor_viewer.gd" type="Script" id=2]
@@ -9,6 +9,18 @@
 [ext_resource path="res://addons/localization_editor_viewer/ui/themes/text_edit_style.tres" type="StyleBox" id=8]
 [ext_resource path="res://addons/localization_editor_viewer/ui/themes/text_popout_header_panel_style.tres" type="StyleBox" id=9]
 [ext_resource path="res://addons/localization_editor_viewer/ui/translation_key_browser_popup.tscn" type="PackedScene" id=10]
+
+[sub_resource type="StyleBoxFlat" id=21]
+content_margin_left = 4.0
+content_margin_right = 0.0
+content_margin_top = 0.0
+content_margin_bottom = 0.0
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0, 0, 0, 1 )
 
 [sub_resource type="StyleBoxFlat" id=7]
 
@@ -52,14 +64,21 @@ border_color = Color( 0, 0.0745098, 0.184314, 1 )
 [node name="LocalizationEditorViewer" type="VBoxContainer"]
 margin_right = 269.0
 margin_bottom = 46.0
+custom_constants/separation = 2
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="KeyInput" type="HBoxContainer" parent="."]
+[node name="Spacer" type="Control" parent="."]
 margin_right = 269.0
-margin_bottom = 24.0
+margin_bottom = 1.0
+rect_min_size = Vector2( 0, 1 )
+
+[node name="KeyInput" type="HBoxContainer" parent="."]
+margin_top = 3.0
+margin_right = 269.0
+margin_bottom = 27.0
 
 [node name="TitleLabel" type="Label" parent="KeyInput"]
 margin_top = 5.0
@@ -69,12 +88,26 @@ text = "Key:"
 
 [node name="KeyInput" type="LineEdit" parent="KeyInput"]
 margin_left = 31.0
-margin_right = 229.0
+margin_right = 185.0
 margin_bottom = 24.0
 hint_tooltip = "The input field for the translation key. 
 If a valid key in inputted, the translated text will be shown below. 
 You can browse available keys with the folder button to the right."
 size_flags_horizontal = 3
+
+[node name="LanguageSelectButton" type="OptionButton" parent="KeyInput"]
+margin_left = 189.0
+margin_right = 229.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 40, 24 )
+custom_styles/hover = SubResource( 21 )
+custom_styles/pressed = SubResource( 21 )
+custom_styles/focus = SubResource( 21 )
+custom_styles/disabled = SubResource( 21 )
+custom_styles/normal = SubResource( 21 )
+text = "en"
+items = [ "en", null, false, 0, false, "fr", null, false, 0, false ]
+selected = 0
 
 [node name="PickerButton" type="Button" parent="KeyInput"]
 margin_left = 233.0
@@ -108,9 +141,9 @@ icon = ExtResource( 6 )
 flat = true
 
 [node name="TextContainer" type="PanelContainer" parent="."]
-margin_top = 28.0
+margin_top = 29.0
 margin_right = 269.0
-margin_bottom = 133.0
+margin_bottom = 134.0
 custom_styles/panel = ExtResource( 7 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="TextContainer"]
@@ -261,6 +294,7 @@ text = "x"
 flat = true
 
 [connection signal="text_changed" from="KeyInput/KeyInput" to="." method="_on_KeyInput_text_changed"]
+[connection signal="item_selected" from="KeyInput/LanguageSelectButton" to="." method="_on_LanguageSelectButton_item_selected"]
 [connection signal="pressed" from="KeyInput/PickerButton" to="." method="_on_PickerButton_pressed"]
 [connection signal="pressed" from="KeyInput/SaveButton" to="." method="_on_SaveButton_pressed"]
 [connection signal="pressed" from="TextContainer/HBoxContainer/ShowTextPopoutButton" to="." method="_on_ShowTextPopoutButton_pressed"]
