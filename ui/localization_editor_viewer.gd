@@ -9,6 +9,7 @@ var variable_path
 func init() -> void:
 	$KeyInput/KeyInput.text = object_being_edited.get(variable_path)
 	_on_KeyInput_text_changed($KeyInput/KeyInput.text)
+	
 
 
 func set_title_label_text(new_text : String) -> void:
@@ -33,7 +34,7 @@ func _on_PickerButton_pressed() -> void:
 	if translated_strings.size() == 0:
 		load_translated_strings()
 	
-	
+	$PopupContainer/TranslationKeyBrowserPopup.base_position = $KeyInput/TitleLabel.get_global_rect().position
 	$PopupContainer/TranslationKeyBrowserPopup.show_keys()
 
 
