@@ -25,16 +25,3 @@ func setup_ui(var object, var path):
 	ui_instance.object_being_edited = object
 	ui_instance.variable_path = path
 	ui_instance.init()
-
-
-func transfer_translated_strings():
-	if ui_instance == null:
-		ui_instance = ui.instance()
-		return 
-	
-	var data = ui_instance.translated_strings
-	ui_instance = ui.instance()
-	ui_instance.translated_strings = data
-
-
-

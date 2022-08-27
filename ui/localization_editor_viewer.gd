@@ -2,7 +2,7 @@ tool
 extends VBoxContainer
 
 var translated_strings : Dictionary
-var object_being_edited
+var object_being_edited setget _object_being_edited_set
 var variable_path
 var language = "en"
 
@@ -28,6 +28,12 @@ func _on_KeyInput_text_changed(new_text: String) -> void:
 	$KeyInput/SaveButton.disabled = new_text == ""
 	
 	object_being_edited.set(variable_path, new_text)
+
+
+func _object_being_edited_set(var value):
+	if value == null:
+		printerr("Object being set was null?")
+	object_being_edited = value
 
 
 func _on_PickerButton_pressed() -> void:
@@ -125,27 +131,40 @@ func load_csv(var path : String, var file_name : String):
 		printerr("Error loading CSV! + " + String(err))
 		return
 	
-	var line : String = file.get_line()
-	while not line == "":
-		var data = get_key_and_line(line)
-		if(data.size() != 0):
-			translated_strings[data[0]] = [data[1], file_path]
+	var line = file.get_line()
+	var headers = line.split(",")
+	var language_index = _get_language_index(headers)
+	if language_index == -1: # Something went wrong or the file is invalid
+		file.close()
+		return
+	
+	line = file.get_csv_line()
+	
+	while line != null and line.size() > language_index:
+		translated_strings[line[0]] = [line[language_index], file_path]
 		
-		line = file.get_line()
+		line = file.get_csv_line()
 	
 	file.close()
 
 
-func get_key_and_line(var line : String, text_delimiter : String = "\"") -> Array:
+func _get_language_index(var header_line : PoolStringArray) -> int:
+	for i in range(header_line.size()):
+		if header_line[i] == language:
+			return i
+	return -1
+
+
+func get_key_and_line(var line : String, var language_index : int, text_delimiter : String = "\"") -> Array:
 	var split_string = line.split(",")
 	var key = split_string[0]
 	if key == "":
 		return []
 	
-	var translated_text = split_string[1]
+	var translated_text = split_string[language_index]
 	
 	if line.count(text_delimiter) > 0:
-		translated_text = line.split(text_delimiter)[1]
+		translated_text = line.split(text_delimiter)[language_index]
 	
 	return [key, translated_text]
 
@@ -184,20 +203,29 @@ func append_to_csv(var path, var key, var value):
 	var found = false
 	
 	var line = file.get_line()
-	while line != "":
-		var key_in_line = line.split(",")[0]
+	var headers = line.split(",")
+	var language_index = _get_language_index(headers)
+	
+	result_string += line + "\n"
+	
+	line = file.get_csv_line()
+	
+	while line != null and line.size() > language_index:
+		var key_in_line = line[0]
 		if key_in_line == key:
 			found = true
+			line[language_index] = "\"" + value + "\""
 			#result_string += key_in_line + ",\"" + value + "\"" + "\n"
-			result_string += generate_line_to_save(line, value)
-			line = file.get_line()
+			#result_string += generate_line_to_save(line, value, language_index)
+			result_string += combine_string_array(line) + "\n"
+			line = file.get_csv_line(",")
 			continue
-		result_string += line + "\n"
-		line = file.get_line()
+		result_string += combine_string_array(line) + "\n"
+		line = file.get_csv_line()
 	
 	if not found:
 		# If we get to the end, append the line.
-		result_string += key + "," + "\"" + value + "\"" + "\n"
+		result_string += _generate_default_line(key, value, language_index)
 	
 	file.close()
 	
@@ -206,9 +234,32 @@ func append_to_csv(var path, var key, var value):
 	file.close()
 
 
-func generate_line_to_save(var original_line : String, var new_value : String):
-	var data = get_key_and_line(original_line)
-	original_line.erase(0, get_line_length_to_delete(original_line))
+func combine_string_array(var array : PoolStringArray, var delimiter = ","):
+	var result = ""
+	for string in array:
+		result += string + delimiter
+	result = result.trim_suffix(",")
+	return result
+
+
+func _generate_default_line(var key, var value, var language_index) -> String:
+	var result = ""
+	
+	result = key +","
+	
+	for i in range(1, language_index, 1):
+		result += "?,"
+	
+	result += value
+	
+	result += "\n"
+	
+	return result
+
+
+func generate_line_to_save(var original_line : String, var new_value : String, var language_index : int):
+	var data = get_key_and_line(original_line, language_index)
+	original_line.erase(0, get_line_length_to_delete(original_line, language_index))
 	
 	return data[0] + "," + "\"" + new_value +"\"" + original_line + "\n"
 
@@ -228,8 +279,8 @@ func get_path_elements(var path : String) -> Array:
 	return [directory, file, path] # directory, file, path
 
 
-func get_line_length_to_delete(var line : String):
-	var data = get_key_and_line(line)
+func get_line_length_to_delete(var line : String, var language_index : int):
+	var data = get_key_and_line(line, language_index)
 	var extra_chars_to_remove_length = 1 # there is always a comma
 	var split_string = line.split(",")
 	
@@ -261,3 +312,5 @@ func _init_language_dropdown():
 
 func _on_LanguageSelectButton_item_selected(index: int) -> void:
 	language = $KeyInput/LanguageSelectButton.get_item_text(index)
+	load_translated_strings()
+	_on_KeyInput_text_changed($KeyInput/KeyInput.text)
