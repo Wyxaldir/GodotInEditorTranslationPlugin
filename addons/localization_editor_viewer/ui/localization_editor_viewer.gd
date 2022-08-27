@@ -69,7 +69,11 @@ func _on_PopoutTextEdit_text_changed() -> void:
 
 func _on_FileDialog_file_selected(path: String) -> void:
 	create_csv_if_needed(path)
-	append_to_csv(path, $KeyInput/KeyInput.text, $TextContainer/TranslatedText.text)
+	
+	var key_text = $KeyInput/KeyInput.text
+	var translated_text = $TextContainer/HBoxContainer/TranslatedText.text
+	
+	append_to_csv(path, key_text, translated_text)
 	load_translated_strings()
 
 

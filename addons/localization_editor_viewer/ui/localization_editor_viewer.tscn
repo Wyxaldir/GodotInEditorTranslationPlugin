@@ -10,10 +10,6 @@
 [ext_resource path="res://addons/localization_editor_viewer/ui/themes/text_popout_header_panel_style.tres" type="StyleBox" id=9]
 [ext_resource path="res://addons/localization_editor_viewer/ui/translation_key_browser_popup.tscn" type="PackedScene" id=10]
 
-
-
-
-
 [sub_resource type="StyleBoxFlat" id=7]
 
 [sub_resource type="StyleBoxFlat" id=8]
