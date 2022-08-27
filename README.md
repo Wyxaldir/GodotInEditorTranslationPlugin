@@ -28,3 +28,5 @@ Editing Translation Locations will set where the plugin will look for the transl
 Editing Valid Variable Names will set which string edits will have the translation display. Is "text" by default.
 For example, you can add "DisplayValue" to the array and whenever you have an exported variable called DisplayValue it will make use of the translation ui.
 
+# Demo Project
+A demo can be found in the demo_project folder. Just unzip outside of the folder and run as normal and it should work!

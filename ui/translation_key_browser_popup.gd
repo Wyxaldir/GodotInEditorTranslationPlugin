@@ -22,6 +22,7 @@ func show_keys():
 		new_button.clip_text = true
 		new_button.connect("pressed", self, "_on_file_button_pressed", [file])
 	
+	rect_size = Vector2(475, 300)
 	popup_centered_minsize(Vector2(475, 300))
 
 
@@ -60,11 +61,16 @@ func _on_file_button_pressed(var file_path):
 		new_button.text = keys[i]
 		new_button.connect("pressed", self, "_on_key_selected", [keys[i]])
 		new_button.connect("mouse_entered", self, "_on_key_hovered", [content[i]])
+		new_button.connect("mouse_exited", self, "_on_key_exited")
 
 
 func _on_key_selected(var key : String):
 	emit_signal("key_selected", key)
 	hide()
+
+
+func _on_key_exited():
+	$HBoxContainer/KeyContents.text = ""
 
 
 func _on_key_hovered(var content : String):

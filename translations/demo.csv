@@ -1,6 +1,0 @@
-,en,fr
-KEY_WELCOME_MESSAGE,"Welcome to the translation demo project! Here you can see the built-in Godot translation features at work by changing the langugage above. To see the editor plugin at work, go ahead and select a label to check out how you can easily view, select and edit translations! 
-
-If you want to import this into another project, simply copy/paste the addons/localization_editor_viewer folder into your project!","Bienvenu au project de traduction! Ici, vous pouvez voir le system normal de Godot fonctionner en changant la langue avec the boutton au dessus. Pour voir le nouveau system fonctionner, sélectionnez un “label” et vous allez être capable de facilement voir, sélectionner and sauvegarder votre texte!
-
-Pour ajouter ce plugin à votre project, veuillez simplement ajouter le fichier “addons/localization_editor_viewer” à votre project!"
