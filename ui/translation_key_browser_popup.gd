@@ -23,7 +23,7 @@ func show_keys():
 		new_button.clip_text = true
 		new_button.connect("pressed", self, "_on_file_button_pressed", [file])
 	
-	rect_position = base_position - Vector2(475 + 30, 0)
+	rect_position = base_position - Vector2(475 + 40, 0)
 	rect_size = Vector2(475, 300)
 	visible = true
 

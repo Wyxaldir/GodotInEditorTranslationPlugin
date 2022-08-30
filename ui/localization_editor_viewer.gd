@@ -40,9 +40,11 @@ func _on_PickerButton_pressed() -> void:
 	if translated_strings.size() == 0:
 		load_translated_strings()
 	
-	$PopupContainer/TranslationKeyBrowserPopup.base_position = $KeyInput/TitleLabel.get_global_rect().position
-	$PopupContainer/TranslationKeyBrowserPopup.show_keys()
+	#$PopupContainer/TranslationKeyBrowserPopup.base_position = $KeyInput/TitleLabel.get_global_rect().position
+	#$PopupContainer/TranslationKeyBrowserPopup.show_keys()
 
+	$KeyInput/TitleLabel/TranslationKeyBrowserPopup.base_position = $KeyInput/TitleLabel.get_global_rect().position
+	$KeyInput/TitleLabel/TranslationKeyBrowserPopup.show_keys()
 
 func _on_PopupPanel_key_selected(key) -> void:
 	$KeyInput/KeyInput.text = key
