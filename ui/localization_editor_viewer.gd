@@ -227,7 +227,7 @@ func append_to_csv(var path, var key, var value):
 	
 	if not found:
 		# If we get to the end, append the line.
-		result_string += _generate_default_line(key, value, language_index)
+		result_string += _generate_default_line(key, value, language_index, headers)
 	
 	file.close()
 	
@@ -244,15 +244,18 @@ func combine_string_array(var array : PoolStringArray, var delimiter = ","):
 	return result
 
 
-func _generate_default_line(var key, var value, var language_index) -> String:
+func _generate_default_line(var key, var value, var language_index, var header) -> String:
 	var result = ""
 	
 	result = key +","
 	
-	for i in range(1, language_index, 1):
-		result += "?,"
+	for i in range(1, header.size(), 1):
+		if i == language_index:
+			result += value + ","
+		else:
+			result += "?,"
 	
-	result += value
+	#result += value
 	
 	result += "\n"
 	
