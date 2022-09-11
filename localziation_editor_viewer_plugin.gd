@@ -22,3 +22,5 @@ func init_project_settings():
 	if not ProjectSettings.has_setting(projectSettingsBasePath + "valid_variable_names"):
 		var newArray : PoolStringArray = ["text"]
 		ProjectSettings.set_setting(projectSettingsBasePath + "valid_variable_names", newArray)
+
+	

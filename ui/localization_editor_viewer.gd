@@ -245,7 +245,7 @@ func combine_string_array(var array : PoolStringArray, var delimiter = ","):
 
 
 func _generate_default_line(var key, var value, var language_index, var header) -> String:
-	var result = ""
+	var result := ""
 	
 	result = key +","
 	
@@ -255,7 +255,7 @@ func _generate_default_line(var key, var value, var language_index, var header) 
 		else:
 			result += "?,"
 	
-	#result += value
+	result.erase(result.length() - 1, 1) # remove the trailing comma
 	
 	result += "\n"
 	
