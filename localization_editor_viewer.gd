@@ -4,13 +4,15 @@ var ui = preload("res://addons/localization_editor_viewer/ui/localization_editor
 var ui_instance = null
 
 func can_handle(object: Object) -> bool:
+	if object.get_class() == "MultiNodeEdit":
+		return false
 	return true
 
 
 func parse_property(object, type, path, hint, hint_text, usage) -> bool:
 	if not type == TYPE_STRING:
 		return false
-
+	
 	for variable_name in ProjectSettings.get_setting("translation_plugin/valid_variable_names"):
 		if variable_name.to_lower() == path.to_lower():
 			setup_ui(object, path)
