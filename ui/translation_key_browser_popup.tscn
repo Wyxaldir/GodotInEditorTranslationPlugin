@@ -1,57 +1,51 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=2 format=3 uid="uid://b2p2yem5xrqlg"]
 
-[ext_resource path="res://addons/localization_editor_viewer/ui/translation_key_browser_popup.gd" type="Script" id=1]
+[ext_resource type="Script" path="res://addons/localization_editor_viewer/ui/translation_key_browser_popup.gd" id="1"]
 
 [node name="TranslationKeyBrowserPopup" type="PopupPanel"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_right = -529.0
-margin_bottom = -300.0
-rect_min_size = Vector2( 475, 300 )
-size_flags_horizontal = 4
-size_flags_vertical = 4
-script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+size = Vector2i(271, 100)
+visible = true
+script = ExtResource("1")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
-margin_left = 4.0
-margin_top = 4.0
-margin_right = 491.0
-margin_bottom = 296.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 267.0
+offset_bottom = 96.0
 
 [node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer"]
-margin_right = 225.0
-margin_bottom = 292.0
-rect_min_size = Vector2( 225, 0 )
-scroll_horizontal_enabled = false
+custom_minimum_size = Vector2i(250, 0)
+layout_mode = 2
+offset_right = 250.0
+offset_bottom = 92.0
 
 [node name="Content" type="VBoxContainer" parent="HBoxContainer/ScrollContainer"]
-margin_right = 225.0
-rect_min_size = Vector2( 225, 0 )
+layout_mode = 2
+offset_right = 250.0
+offset_bottom = 92.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="BackButton" type="Button" parent="HBoxContainer/ScrollContainer/Content"]
 visible = false
-margin_right = 225.0
-margin_bottom = 20.0
+layout_mode = 2
+offset_right = 225.0
+offset_bottom = 20.0
 text = "Back to File Browser"
 
 [node name="VSeparator" type="VSeparator" parent="HBoxContainer"]
-margin_left = 229.0
-margin_right = 233.0
-margin_bottom = 292.0
+layout_mode = 2
+offset_left = 254.0
+offset_right = 258.0
+offset_bottom = 92.0
 
 [node name="KeyContents" type="Label" parent="HBoxContainer"]
-margin_left = 237.0
-margin_right = 499.0
-margin_bottom = 292.0
-rect_min_size = Vector2( 250, 0 )
+layout_mode = 2
+offset_left = 262.0
+offset_right = 263.0
+offset_bottom = 92.0
 size_flags_horizontal = 3
 size_flags_vertical = 1
-autowrap = true
+autowrap_mode = 3
 
 [connection signal="pressed" from="HBoxContainer/ScrollContainer/Content/BackButton" to="." method="_on_BackButton_pressed"]

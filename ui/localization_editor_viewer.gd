@@ -1,10 +1,19 @@
-tool
+@tool
 extends VBoxContainer
 
 var translated_strings : Dictionary
-var object_being_edited setget _object_being_edited_set
+var object_being_edited :
+	get:
+		return object_being_edited
+	set(value):
+		if value == null:
+			printerr("Object being set was null?")
+		object_being_edited = value
+
+
 var variable_path
 var language = "en"
+
 
 func init() -> void:
 	$KeyInput/KeyInput.text = object_being_edited.get(variable_path)
@@ -21,19 +30,13 @@ func _on_KeyInput_text_changed(new_text: String) -> void:
 	
 	if new_text.length() > 0 and new_text.begins_with(" "):
 		while new_text.begins_with(" "):
-			new_text.erase(0, 1)
+			new_text.trim_prefix(" ")
 		
 		$KeyInput/KeyInput.text = new_text
 	
 	$KeyInput/SaveButton.disabled = new_text == ""
 	
 	object_being_edited.set(variable_path, new_text)
-
-
-func _object_being_edited_set(var value):
-	if value == null:
-		printerr("Object being set was null?")
-	object_being_edited = value
 
 
 func _on_PickerButton_pressed() -> void:
@@ -55,22 +58,21 @@ func _on_SaveButton_pressed() -> void:
 	var key = $KeyInput/KeyInput.text
 	if key == "" or key.count(" ") == key.length():
 		return
-	
 	var default_path = get_default_path($KeyInput/KeyInput.text)
 	var path_elements = get_path_elements(default_path)
 	$PopupContainer/FileDialog.current_dir = path_elements[0]
 	$PopupContainer/FileDialog.current_file = path_elements[1]
 	$PopupContainer/FileDialog.current_path = path_elements[2]
-	
+
 	$PopupContainer/FileDialog.popup()
-	$PopupContainer/FileDialog.rect_position = get_global_mouse_position() - Vector2($PopupContainer/FileDialog.rect_size.x, 0)
+	$PopupContainer/FileDialog.position = get_global_mouse_position() - Vector2($PopupContainer/FileDialog.size.x, 0)
 
 
 func _on_ShowTextPopoutButton_pressed() -> void:
 	$PopupContainer/TextEditPopup.popup()
 	$PopupContainer/TextEditPopup/VBoxContainer/PopoutTextEdit.grab_focus()
 	$PopupContainer/TextEditPopup/VBoxContainer/PopoutTextEdit.text = $TextContainer/HBoxContainer/TranslatedText.text
-
+	$PopupContainer/TextEditPopup.position = get_global_mouse_position() - Vector2($PopupContainer/TextEditPopup.size.x, 0)
 
 func _on_PopoutTextEdit_text_changed() -> void:
 	$TextContainer/HBoxContainer/TranslatedText.text = $PopupContainer/TextEditPopup/VBoxContainer/PopoutTextEdit.text
@@ -86,32 +88,31 @@ func _on_FileDialog_file_selected(path: String) -> void:
 	load_translated_strings()
 
 
-func translate_text(var text : String) -> String:
+func translate_text(text : String) -> String:
 	text = text.to_upper()
 	
 	if not translated_strings.size() == 0 and translated_strings.has(text):
 		return translated_strings[text][0]
 	
 	if not load_translated_strings():
-		return "No text available"
+		return ""
 	
 	if translated_strings.has(text):
 		return translated_strings[text][0]
 	
-	return "No text available"
+	return ""
 
 
-func load_translated_strings(var base_folder : String = "") -> bool:
+func load_translated_strings(base_folder : String = "") -> bool:
 	if base_folder == "":
 		base_folder = ProjectSettings.get_setting("translation_plugin/translations_location")
 	
-	var dir = Directory.new()
-	var err = dir.open(base_folder)
-	if not err == OK:
+	var dir = DirAccess.open(base_folder)
+	if dir == null:
 		printerr("Error loading translations!")
 		return false
 	
-	dir.list_dir_begin(true)
+	dir.list_dir_begin() # TODOGODOT4 fill missing arguments https://github.com/godotengine/godot/pull/40547
 	var file_name : String = dir.get_next()
 	while file_name != "":
 		if dir.current_is_dir():
@@ -125,19 +126,17 @@ func load_translated_strings(var base_folder : String = "") -> bool:
 	return true
 
 
-func load_csv(var path : String, var file_name : String):
+func load_csv(path : String, file_name : String):
 	var file_path = path + "\\" + file_name
-	var file = File.new()
-	var err = file.open(file_path, 1)
-	if not err == OK:
-		printerr("Error loading CSV! + " + String(err))
+	var file = FileAccess.open(file_path, 1)
+	if file == null:
+		printerr("Error loading CSV at path " + file_path + "!")
 		return
 	
 	var line = file.get_line()
 	var headers = line.split(",")
 	var language_index = _get_language_index(headers)
 	if language_index == -1: # Something went wrong or the file is invalid
-		file.close()
 		return
 	
 	line = file.get_csv_line()
@@ -146,18 +145,16 @@ func load_csv(var path : String, var file_name : String):
 		translated_strings[line[0]] = [line[language_index], file_path]
 		
 		line = file.get_csv_line()
-	
-	file.close()
 
 
-func _get_language_index(var header_line : PoolStringArray) -> int:
+func _get_language_index(header_line : PackedStringArray) -> int:
 	for i in range(header_line.size()):
 		if header_line[i] == language:
 			return i
 	return -1
 
 
-func get_key_and_line(var line : String, var language_index : int, text_delimiter : String = "\"") -> Array:
+func get_key_and_line(line : String, language_index : int, text_delimiter : String = "\"") -> Array:
 	var split_string = line.split(",")
 	var key = split_string[0]
 	if key == "":
@@ -171,13 +168,11 @@ func get_key_and_line(var line : String, var language_index : int, text_delimite
 	return [key, translated_text]
 
 
-func create_csv_if_needed(var path : String):
-	var file : File = File.new()
-	
-	if file.file_exists(path):
+func create_csv_if_needed(path : String):
+	if FileAccess.file_exists(path):
 		return
 	
-	file.open(path, 2)
+	var file = FileAccess.open(path, 2)
 	var text = ","
 	var languages_loaded = []
 	for language in TranslationServer.get_loaded_locales():
@@ -191,14 +186,12 @@ func create_csv_if_needed(var path : String):
 	text.erase(text.length() - 1, 1)
 	
 	file.store_line(text)
-	file.close()
 
 
-func append_to_csv(var path, var key, var value):
-	var file : File = File.new()
-	var err = file.open(path, 3)
-	if err != OK:
-		printerr("ERROR OPENING FILE: " + String(err))
+func append_to_csv(path, key, value):
+	var file = FileAccess.open(path, 3)
+	if file == null:
+		printerr("ERROR OPENING FILE: " + String(path))
 		return
 	
 	var result_string : String = ""
@@ -229,14 +222,11 @@ func append_to_csv(var path, var key, var value):
 		# If we get to the end, append the line.
 		result_string += _generate_default_line(key, value, language_index, headers)
 	
-	file.close()
-	
-	file.open(path, 2)
+	file = file.open(path, 2)
 	file.store_string(result_string)
-	file.close()
 
 
-func combine_string_array(var array : PoolStringArray, var delimiter = ","):
+func combine_string_array(array : PackedStringArray, delimiter = ","):
 	var result = ""
 	for string in array:
 		result += string + delimiter
@@ -244,7 +234,7 @@ func combine_string_array(var array : PoolStringArray, var delimiter = ","):
 	return result
 
 
-func _generate_default_line(var key, var value, var language_index, var header) -> String:
+func _generate_default_line(key, value, language_index, header) -> String:
 	var result := ""
 	
 	result = key +","
@@ -255,36 +245,37 @@ func _generate_default_line(var key, var value, var language_index, var header) 
 		else:
 			result += "?,"
 	
-	result.erase(result.length() - 1, 1) # remove the trailing comma
+	result = result.trim_suffix(",") # remove_at the trailing comma
 	
 	result += "\n"
 	
 	return result
 
 
-func generate_line_to_save(var original_line : String, var new_value : String, var language_index : int):
-	var data = get_key_and_line(original_line, language_index)
-	original_line.erase(0, get_line_length_to_delete(original_line, language_index))
-	
-	return data[0] + "," + "\"" + new_value +"\"" + original_line + "\n"
+#func generate_line_to_save(original_line : String, new_value : String, language_index : int):
+#	var data = get_key_and_line(original_line, language_index)
+#	original_line.erase(0, get_line_length_to_delete(original_line, language_index))
+#
+#	return data[0] + "," + "\"" + new_value +"\"" + original_line + "\n"
 
 
-func get_default_path(var key) -> String:
+func get_default_path(key) -> String:
 	if not translated_strings.has(key):
 		return "res://translations/text.csv"
 	return translated_strings[key][1]
 
 
-func get_path_elements(var path : String) -> Array:
+func get_path_elements(path : String) -> Array:
 	path = "res://" + path
 	var file = path.split("\\")[-1]
-	var directory = path
-	directory.erase(directory.length() - (file.length() + 1), file.length() + 1)
+	var directory = path.substr(0, path.length() - (file.length() + 1))
+	
+	#directory.erase(directory.length() - (file.length() + 1), file.length() + 1)
 	
 	return [directory, file, path] # directory, file, path
 
 
-func get_line_length_to_delete(var line : String, var language_index : int):
+func get_line_length_to_delete(line : String, language_index : int):
 	var data = get_key_and_line(line, language_index)
 	var extra_chars_to_remove_length = 1 # there is always a comma
 	var split_string = line.split(",")

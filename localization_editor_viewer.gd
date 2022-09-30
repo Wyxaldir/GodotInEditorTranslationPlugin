@@ -3,13 +3,13 @@ extends EditorInspectorPlugin
 var ui = preload("res://addons/localization_editor_viewer/ui/localization_editor_viewer.tscn")
 var ui_instance = null
 
-func can_handle(object: Object) -> bool:
+func _can_handle(object: Variant) -> bool:
 	if object.get_class() == "MultiNodeEdit":
 		return false
 	return true
 
 
-func parse_property(object, type, path, hint, hint_text, usage) -> bool:
+func _parse_property(object, type, path, hint, hint_text, usage, _bool) -> bool:
 	if not type == TYPE_STRING:
 		return false
 	
@@ -20,8 +20,8 @@ func parse_property(object, type, path, hint, hint_text, usage) -> bool:
 	return false
 
 
-func setup_ui(var object, var path):
-	ui_instance = ui.instance()
+func setup_ui(object, path):
+	ui_instance = ui.instantiate()
 	add_custom_control(ui_instance)
 	ui_instance.set_title_label_text(path.capitalize())
 	ui_instance.object_being_edited = object

@@ -1,4 +1,4 @@
-tool
+@tool
 extends EditorPlugin
 
 var plugin
@@ -20,7 +20,7 @@ func init_project_settings():
 	if not ProjectSettings.has_setting(projectSettingsBasePath + "translations_location"):
 		ProjectSettings.set_setting(projectSettingsBasePath + "translations_location", "res://translations/")
 	if not ProjectSettings.has_setting(projectSettingsBasePath + "valid_variable_names"):
-		var newArray : PoolStringArray = ["text"]
+		var newArray : PackedStringArray = ["text"]
 		ProjectSettings.set_setting(projectSettingsBasePath + "valid_variable_names", newArray)
 
 	
