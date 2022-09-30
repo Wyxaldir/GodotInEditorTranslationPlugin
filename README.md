@@ -1,5 +1,5 @@
-# Godot In-Editor Translation Viewer/Editor
-A plugin for Godot that makes creating and maintaining translations much easier and intuitive in-editor. 
+# Godot In-Editor Translation Viewer/Editor (Godot4)
+A plugin for Godot 4 that makes creating and maintaining translations much easier and intuitive in-editor. 
 
 The goal of this plugin is to make it easy to create new translations and add them to existing or new .csv files. 
 This will replace the old workflow of creating new .csv files and adding text before then adding them to editor without being able to see what you're adding. This method is also prone to mistakes where you could make a typo in the key for example. This workflow is also harder to follow through with, as you need to plan out all the text you need ahead of time, or go back and forth between the game and your .csv files constantly.
@@ -30,3 +30,4 @@ For example, you can add "DisplayValue" to the array and whenever you have an ex
 
 # Demo Project
 A demo can be found in the demo_project folder. Just unzip outside of the folder and run as normal and it should work!
+The Demo Project is still in Godot 3.5, and will NOT work in Godot 4. As the features are the same, they can be tested out in Godot 3.5 still.
