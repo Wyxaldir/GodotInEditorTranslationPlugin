@@ -16,7 +16,10 @@ var language = "en"
 
 
 func init() -> void:
-	$KeyInput/KeyInput.text = object_being_edited.get(variable_path)
+	var path_value = object_being_edited.get(variable_path)
+	if path_value == null: $KeyInput/KeyInput.text = ""
+	else: $KeyInput/KeyInput.text = path_value
+	
 	_on_KeyInput_text_changed($KeyInput/KeyInput.text)
 	_init_language_dropdown()
 
