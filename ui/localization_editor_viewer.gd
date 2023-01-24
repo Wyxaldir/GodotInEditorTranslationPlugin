@@ -67,8 +67,8 @@ func _on_SaveButton_pressed() -> void:
 	$PopupContainer/FileDialog.current_file = path_elements[1]
 	$PopupContainer/FileDialog.current_path = path_elements[2]
 
-	$PopupContainer/FileDialog.popup()
-	$PopupContainer/FileDialog.position = get_global_mouse_position() - Vector2($PopupContainer/FileDialog.size.x, 0)
+	$PopupContainer/FileDialog.popup_centered(Vector2(350, 600))
+	#$PopupContainer/FileDialog.position = get_global_mouse_position() - Vector2($PopupContainer/FileDialog.size.x, 0)
 
 
 func _on_ShowTextPopoutButton_pressed() -> void:
