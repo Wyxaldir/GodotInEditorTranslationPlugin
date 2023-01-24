@@ -20,7 +20,8 @@ func init_project_settings():
 	if not ProjectSettings.has_setting(projectSettingsBasePath + "translations_location"):
 		ProjectSettings.set_setting(projectSettingsBasePath + "translations_location", "res://translations/")
 	if not ProjectSettings.has_setting(projectSettingsBasePath + "valid_variable_names"):
-		var newArray : PackedStringArray = ["text"]
-		ProjectSettings.set_setting(projectSettingsBasePath + "valid_variable_names", newArray)
-
-	
+		var new_array : PackedStringArray = ["text"]
+		ProjectSettings.set_setting(projectSettingsBasePath + "valid_variable_names", new_array)
+	if not ProjectSettings.has_setting(projectSettingsBasePath + "default_locales"):
+		var new_array : PackedStringArray = ["en", "fr"]
+		ProjectSettings.set_setting(projectSettingsBasePath + "default_locales", new_array)

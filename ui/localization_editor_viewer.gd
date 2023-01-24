@@ -176,9 +176,10 @@ func create_csv_if_needed(path : String):
 		return
 	
 	var file = FileAccess.open(path, 2)
-	var text = ","
+	var text := ","
 	var languages_loaded = []
-	for language in TranslationServer.get_loaded_locales():
+	var languages = _get_languages_or_defaults()
+	for language in languages:
 		if languages_loaded.has(language):
 			continue
 		
@@ -186,7 +187,8 @@ func create_csv_if_needed(path : String):
 		text += language + ","
 	
 	# Erase the last comma
-	text.erase(text.length() - 1, 1)
+	text = text.left(-1)
+	
 	
 	file.store_line(text)
 
@@ -295,7 +297,7 @@ func _on_TranslationKeyBrowserPopup_key_selected(key) -> void:
 
 
 func _init_language_dropdown():
-	var locales = TranslationServer.get_loaded_locales()
+	var locales = _get_languages_or_defaults()
 	var unique_locales = []
 	
 	for locale in locales:
@@ -313,3 +315,10 @@ func _on_LanguageSelectButton_item_selected(index: int) -> void:
 	language = $KeyInput/LanguageSelectButton.get_item_text(index)
 	load_translated_strings()
 	_on_KeyInput_text_changed($KeyInput/KeyInput.text)
+
+
+func _get_languages_or_defaults() -> PackedStringArray:
+	var result = TranslationServer.get_loaded_locales()
+	if result == null or result.size() == 0:
+		return ProjectSettings.get_setting("translation_plugin/default_locales")
+	return result

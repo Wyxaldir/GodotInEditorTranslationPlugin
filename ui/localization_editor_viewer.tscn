@@ -45,7 +45,7 @@ placeholder_text = "Type key here..."
 clear_button_enabled = true
 
 [node name="LanguageSelectButton" type="OptionButton" parent="KeyInput"]
-custom_minimum_size = Vector2i(50, 0)
+custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 offset_left = 298.0
 offset_right = 348.0
@@ -82,16 +82,17 @@ offset_right = 404.0
 offset_bottom = 100.0
 
 [node name="TranslatedText" type="TextEdit" parent="TextContainer/HBoxContainer"]
-custom_minimum_size = Vector2i(0, 100)
+custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 offset_right = 376.0
 offset_bottom = 100.0
 size_flags_horizontal = 3
 tooltip_text = "The translated version of the key input above. 
 Editing this does nothing unless you save it to a .csv using the save button in the top-right of the ui."
+text = "x"
 placeholder_text = "Type translated string here..."
+drag_and_drop_selection_enabled = false
 virtual_keyboard_enabled = false
-highlight_all_occurrences = true
 
 [node name="ShowTextPopoutButton" type="Button" parent="TextContainer/HBoxContainer"]
 layout_mode = 2
