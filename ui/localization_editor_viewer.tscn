@@ -1,13 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://cf8i6e6rrh64m"]
+[gd_scene load_steps=7 format=3 uid="uid://cf8i6e6rrh64m"]
 
 [ext_resource type="Texture2D" uid="uid://c8eorfmyiwks5" path="res://addons/localization_editor_viewer/ui/icons/expand_text.svg" id="1"]
 [ext_resource type="Script" path="res://addons/localization_editor_viewer/ui/localization_editor_viewer.gd" id="2"]
 [ext_resource type="Texture2D" uid="uid://drkn2cdpuiqfm" path="res://addons/localization_editor_viewer/ui/icons/folder.svg" id="3"]
+[ext_resource type="Theme" uid="uid://c3b26tjhe55x1" path="res://addons/localization_editor_viewer/ui/themes/panel_theme.tres" id="3_sb83f"]
 [ext_resource type="Texture2D" uid="uid://c4lqj4qygso46" path="res://addons/localization_editor_viewer/ui/icons/save.svg" id="6"]
 [ext_resource type="PackedScene" uid="uid://b2p2yem5xrqlg" path="res://addons/localization_editor_viewer/ui/translation_key_browser_popup.tscn" id="10"]
 
 [node name="LocalizationEditorViewer" type="VBoxContainer"]
-offset_right = 354.0
+offset_right = 427.0
 offset_bottom = 139.0
 script = ExtResource("2")
 
@@ -43,6 +44,7 @@ layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="TextContainer"]
 layout_mode = 2
+theme_override_constants/separation = 3
 
 [node name="TranslatedText" type="TextEdit" parent="TextContainer/HBoxContainer"]
 custom_minimum_size = Vector2(0, 100)
@@ -62,12 +64,14 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 3
 focus_mode = 0
+theme = ExtResource("3_sb83f")
 icon = ExtResource("1")
 
 [node name="PickerButton" type="Button" parent="TextContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 tooltip_text = "Browse valid keys and see their translated values."
 focus_mode = 0
+theme = ExtResource("3_sb83f")
 icon = ExtResource("3")
 
 [node name="SaveButton" type="Button" parent="TextContainer/HBoxContainer/VBoxContainer"]
@@ -77,8 +81,13 @@ tooltip_text = "Save any changes made to the contents of a key (edits made in th
 Will replace existing text associated with a key or append if it is a new key. 
 You can create new files here too by selecting a file that does not exist."
 focus_mode = 0
+theme = ExtResource("3_sb83f")
 disabled = true
 icon = ExtResource("6")
+
+[node name="Control" type="Control" parent="TextContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
 
 [node name="PopupContainer" type="Node" parent="."]
 
@@ -95,8 +104,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 4.0
 offset_top = 4.0
-offset_right = 396.0
-offset_bottom = 496.0
+offset_right = -756.0
+offset_bottom = -152.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
@@ -131,9 +140,9 @@ icon_alignment = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = 4.0
+offset_left = -1148.0
 offset_top = 4.0
-offset_right = 396.0
+offset_right = -756.0
 offset_bottom = 496.0
 grow_horizontal = 0
 size_flags_horizontal = 8
