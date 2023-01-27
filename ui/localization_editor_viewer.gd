@@ -37,7 +37,7 @@ func _on_KeyInput_text_changed(new_text: String) -> void:
 		
 		$KeyInput/KeyInput.text = new_text
 	
-	$KeyInput/SaveButton.disabled = new_text == ""
+	%SaveButton.disabled = new_text == ""
 	
 	object_being_edited.set(variable_path, new_text)
 
@@ -72,10 +72,9 @@ func _on_SaveButton_pressed() -> void:
 
 
 func _on_ShowTextPopoutButton_pressed() -> void:
-	$PopupContainer/TextEditPopup.popup()
+	$PopupContainer/TextEditPopup.popup_centered(Vector2(600, 700))
 	$PopupContainer/TextEditPopup/VBoxContainer/PopoutTextEdit.grab_focus()
 	$PopupContainer/TextEditPopup/VBoxContainer/PopoutTextEdit.text = $TextContainer/HBoxContainer/TranslatedText.text
-	$PopupContainer/TextEditPopup.position = get_global_mouse_position() - Vector2($PopupContainer/TextEditPopup.size.x, 0)
 
 func _on_PopoutTextEdit_text_changed() -> void:
 	$TextContainer/HBoxContainer/TranslatedText.text = $PopupContainer/TextEditPopup/VBoxContainer/PopoutTextEdit.text
